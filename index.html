@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แผนที่ดิจิทัลร้านค้าชุมชนบ้านสามพร้าว</title>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+}
+
+/* Header */
+
+header{
+    background:linear-gradient(
+        135deg,
+        #4F46E5,
+        #7C3AED,
+        #EC4899,
+        #F97316
+    );
+    color:white;
+    text-align:center;
+    padding:40px 20px;
+    position:relative;
+    overflow:hidden;
+}
+
+header h1{
+    font-size:2rem;
+}
+
+header p{
+    margin-top:10px;
+    opacity:.9;
+}
+
+/* Stats */
+
+.stats{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin:25px;
+}
+
+.stat{
+    background:white;
+    padding:15px 25px;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
+    font-weight:bold;
+}
+
+/* Map */
+
+.map-container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+    position:relative;
+}
+
+.map-container img{
+    width:100%;
+    border-radius:20px;
+    display:block;
+}
+
+/* Marker */
+
+.marker{
+    position:absolute;
+    font-size:35px;
+    cursor:pointer;
+    transform:translate(-50%,-50%);
+    transition:.2s;
+}
+
+.marker:hover{
+    transform:translate(-50%,-50%) scale(1.2);
+}
+
+/* Popup Card */
+
+.popup{
+    position:absolute;
+    width:350px;
+    max-width:350px;
+    min-width:0;
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,.2);
+    display:none;
+    z-index:999;
+}
+
+.popup img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+}
+
+.popup-content{
+    padding:15px;
+}
+
+.popup h3{
+    color:#7C3AED;
+    margin-bottom:10px;
+}
+
+.popup p{
+    margin-bottom:8px;
+    line-height:1.5;
+}
+
+.close-btn{
+    position:absolute;
+    top:8px;
+    right:12px;
+    font-size:22px;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.popup{
+    max-width:280px;
+    min-width:250px;
+}
+
+
+.map-container{
+    background:white;
+    padding:20px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+.map-container{
+    position:relative;
+    overflow:visible;
+}
+
+.map-container > img{
+    position:relative;
+    z-index:1;
+}
+
+.popup{
+    z-index:999;
+}
+
+.stats{
+    margin-top:-40px;
+    position:relative;
+    z-index:10;
+}
+
+header h1{
+    font-size:3rem;
+    font-weight:800;
+    margin-bottom:15px;
+    text-shadow:
+    0 0 15px rgba(255,255,255,.3);
+}
+.blur1{
+    position:absolute;
+    width:250px;
+    height:250px;
+    background:#ffffff30;
+    border-radius:50%;
+    top:-80px;
+    left:-50px;
+    filter:blur(40px);
+}
+
+.blur2{
+    position:absolute;
+    width:300px;
+    height:300px;
+    background:#ffffff20;
+    border-radius:50%;
+    right:-80px;
+    bottom:-100px;
+    filter:blur(50px);
+}
+
+.popup-content p{
+    margin-bottom:10px;
+    line-height:1.6;
+    color:#444;
+}
+
+#popupType{
+    font-weight:600;
+    color:#7C3AED;
+}
+
+#popupLocation,
+#popupPhone,
+#popupTime{
+    background:#F3F4F6;
+    padding:8px 12px;
+    border-radius:10px;
+    margin-top:6px;
+}
+
+footer{
+    margin-top:40px;
+    background:#1f2937;
+    color:white;
+    text-align:center;
+    padding:30px;
+}
+
+footer h3{
+    margin-bottom:10px;
+}
+
+footer p{
+    margin:5px 0;
+}
+.marker{
+    position:absolute;
+    font-size:52px;
+    line-height:1;
+    cursor:pointer;
+    transform:translate(-50%,-100%);
+    transition:0.2s;
+    filter:drop-shadow(0 4px 8px rgba(0,0,0,.25));
+    z-index:50;
+}
+
+.marker:hover{
+    transform:translate(-50%,-100%) scale(1.08);
+}
+
+.marker.general{
+    color:#3B82F6;
+}
+
+.marker.elder{
+    color:#A855F7;
+}
+
+.marker.dessert{
+    color:#F97316;
+}
+.legend{
+    text-align:center;
+    margin:15px 0;
+    font-weight:600;
+}
+/* =========================
+   Responsive สำหรับ Tablet / Mobile
+   ========================= */
+
+/* ปุ่มนำทาง */
+#popupLink{
+    display:block;
+    width:100%;
+    text-align:center;
+    text-decoration:none;
+    background:#7C3AED;
+    color:white;
+    padding:12px;
+    border-radius:12px;
+    margin-top:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+#popupLink:hover{
+    background:#6D28D9;
+}
+
+/* ปุ่มปิด */
+.close-btn{
+    z-index:10;
+    width:32px;
+    height:32px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.45);
+    border-radius:50%;
+}
+
+/* iPad / Tablet */
+@media (min-width:601px) and (max-width:1024px){
+
+    .map-container{
+        width:94%;
+        padding:15px;
+    }
+
+    .popup{
+        width:300px;
+        max-width:300px;
+        min-width:0;
+    }
+
+    .popup img{
+        height:160px;
+    }
+}
+
+
+/* โทรศัพท์ */
+@media (max-width:600px){
+
+    header{
+        padding:28px 15px;
+    }
+
+    header h1{
+        font-size:1.6rem;
+    }
+
+    header p{
+        font-size:.9rem;
+    }
+
+    .stats{
+        margin:20px 10px;
+        gap:8px;
+    }
+
+    .stat{
+        width:100%;
+        text-align:center;
+        padding:12px 10px;
+        font-size:.9rem;
+    }
+
+    .map-container{
+        width:96%;
+        padding:8px;
+        border-radius:18px;
+    }
+
+    /*
+      Popup บนมือถือใช้ fixed
+      เพื่อไม่ให้ล้นออกนอกหน้าจอ
+    */
+    .popup{
+        position:fixed !important;
+        left:10px !important;
+        right:10px !important;
+        bottom:10px !important;
+        top:auto !important;
+
+        width:auto !important;
+        max-width:none !important;
+        min-width:0 !important;
+
+        max-height:85vh;
+        overflow-y:auto;
+
+        border-radius:18px;
+        z-index:9999;
+    }
+
+    .popup img{
+        width:100%;
+        height:150px;
+        object-fit:cover;
+    }
+
+    .popup-content{
+        padding:14px;
+    }
+
+    .popup h3{
+        font-size:1.1rem;
+    }
+
+    .popup p{
+        font-size:.9rem;
+    }
+
+    #popupLink{
+        padding:13px;
+        font-size:1rem;
+    }
+
+    .close-btn{
+        top:8px;
+        right:8px;
+    }
+
+    footer{
+        padding:25px 15px;
+        font-size:.85rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="blur1"></div>
+    <div class="blur2"></div>
+    <h1>🗺️ แผนที่ดิจิทัลร้านค้าชุมชนบ้านสามพร้าว</h1>
+    <p>ค้นหาร้านค้าในชุมชนได้ง่ายและสะดวก</p>
+</header>
+
+<div class="stats">
+    <div class="stat">📍ร้านค้าทั้งหมดมี 20 ร้าน</div>
+    <div class="stat">🔵ร้านค้าทั่วไป 14 ร้าน</div>
+    <div class="stat">🟣ร้านผู้สูงอายุ 3 ร้าน</div>
+    <div class="stat">🟠ร้านของหวาน 3 ร้าน</div>
+</div>
+<!--<div class="legend">
+    🔵 ร้านค้าทั่วไป |
+    🟣 ร้านผู้สูงอายุ |
+    🟠 ร้านของหวานและเครื่องดื่ม
+</div>-->
+
+<div class="map-container">
+
+    <!-- เปลี่ยนเป็นรูปแผนที่ของเธอ -->
+    <img src="map.jpg" alt="Map">
+
+    <!-- หมุดตัวอย่าง -->
+
+    <!-- หมุดร้านค้า 20 ร้าน -->
+
+<!-- หมุดร้านค้า 20 ร้าน -->
+
+<div class="marker general"
+     style="top:25.91%; left:33.87%;"
+     onclick="showShop(event,'shop1')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker dessert"
+     style="top:28.98%; left:59.79%;"
+     onclick="showShop(event,'shop2')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker elder"
+     style="top:30.70%; left:42.97%;"
+     onclick="showShop(event,'shop3')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker dessert"
+     style="top:32.17%; left:69.89%;"
+     onclick="showShop(event,'shop4')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:33.52%; left:91.35%;"
+     onclick="showShop(event,'shop5')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:34.26%; left:54.64%;"
+     onclick="showShop(event,'shop6')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:35.12%; left:80.27%;"
+     onclick="showShop(event,'shop7')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker elder"
+     style="top:45.55%; left:25.02%;"
+     onclick="showShop(event,'shop8')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:44.07%; left:65.17%;"
+     onclick="showShop(event,'shop9')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:48.33%; left:16.53%;"
+     onclick="showShop(event,'shop10')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:48.36%; left:54.27%;"
+     onclick="showShop(event,'shop11')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:48.85%; left:44.89%;"
+     onclick="showShop(event,'shop12')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:49.35%; left:87.47%;"
+     onclick="showShop(event,'shop13')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:49.60%; left:31.13%;"
+     onclick="showShop(event,'shop14')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:60.74%; left:90.77%;"
+     onclick="showShop(event,'shop15')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker elder"
+     style="top:62.36%; left:74.50%;"
+     onclick="showShop(event,'shop16')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker dessert"
+     style="top:71.19%; left:36.93%;"
+     onclick="showShop(event,'shop17')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:72.54%; left:48.03%;"
+     onclick="showShop(event,'shop18')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:74.38%; left:88.27%;"
+     onclick="showShop(event,'shop19')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+
+<div class="marker general"
+     style="top:75.85%; left:63.20%;"
+     onclick="showShop(event,'shop20')">
+    <i class="fa-solid fa-location-dot"></i>
+</div>
+    <!-- Popup -->
+
+    <div id="popup" class="popup">
+
+        <span class="close-btn"
+        onclick="closePopup()">×</span>
+
+       <img id="popupImage"
+       src="./shop1.jpg"
+       alt="รูปภาพร้านค้า">
+
+        <div class="popup-content">
+
+            <h3 id="popupName">
+                ชื่อร้าน
+            </h3>
+
+            <p id="popupType"></p>
+
+            <p id="popupDetail"></p>
+            <hr>
+
+            <p id="popupTime"></p>
+
+            <p id="popupPhone"></p>
+
+            <p id="popupLocation"></p>
+            <a id="popupLink"
+               href="#"
+               target="_blank">
+               นำทาง
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+<footer>
+    <p>
+        คณะผู้จัดทำ โครงงานแผนที่ดิจิทัลร้านค้าชุมชนบ้านสามพร้าว<br>
+        คณะวิทยาศาสตร์ สาขาวิทยาการคอมพิวเตอร์และเทคโนโลยีสารสนเทศ<br>
+        มหาวิทยาลัยราชภัฏอุดรธานี
+    </p>
+</footer>
+
+<script>
+
+const shops = {
+
+shop1:{
+name:"อาหารตามสั่งน้องมิเกล",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"จำหน่ายอาหารตามสั่งหลากหลายเมนู พร้อมเครื่องดื่มและสมูทตี้ มีบริการจัดส่งตามหอพักในพื้นที่",
+time:"08:00 - 22:00 น.",
+phone:"064-575-2918",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+image:"shop1.jpg",
+link:"https://www.google.com/maps?q=17.44614, 102.87584"
+},
+
+shop2:{
+name:"ร้านเครปดวงใจ",
+type:"🟠 ร้านของหวานและเครื่องดื่ม",
+detail:"จำหน่ายเครปหลากหลายไส้ ทั้งไส้หวานและไส้คาว ทำสดใหม่ตามสั่ง",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"092-678-5883",
+time:"18:00 - 00:00 น.",
+image:"shop13.jpg",
+link:"https://www.google.com/maps?q=17.44537, 102.8816"
+},
+
+shop3:{
+name:"ข้าวแกง แกงถุง",
+type:"🟣 ร้านผู้สูงอายุ",
+detail:"จำหน่ายข้าวราดแกงและแกงถุงพร้อมรับประทาน เหมาะสำหรับซื้อกลับบ้านในช่วงเช้า",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"099-956-9239",
+time:"05:00 - 10:00 น.",
+image:"shop3.jpg",
+link:"https://www.google.com/maps?q=17.44434, 102.87404"
+},
+
+shop4:{
+name:"ปั่น-ตัก ชานมไข่มุข",
+type:"🟠 ร้านของหวานและเครื่องดื่ม",
+detail:"จำหน่ายชานมไข่มุก เครื่องดื่มปั่น และของว่างทานเล่น เหมาะสำหรับซื้อรับประทานระหว่างวัน",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"088-540-9101",
+time:"10:00 - 19:00 น.",
+image:"shop2.jpg",
+link:"https://www.google.com/maps?q=17.44717, 102.87511"
+},
+
+shop5:{
+name:"ร้านแกงเส้น ข้าวเปียก",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"ให้บริการแกงเส้น ข้าวเปียก และเมนูอาหารเช้าสไตล์พื้นบ้าน รสชาติดั้งเดิม",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"093-057-3715",
+time:"06:00 - 19:00 น.",
+image:"shop4.jpg",
+link:"https://www.google.com/maps?q=17.44372, 102.87389"
+},
+
+shop6:{
+name:"เจ้เปิ้ลก๋วยเตี๋ยวรสเด็ด",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"จำหน่ายก๋วยเตี๋ยวหลากหลายเมนู น้ำซุปเข้มข้น รสชาติเป็นเอกลักษณ์ของร้าน",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"093-656-0105",
+time:"10:00 - 20:00 น.",
+image:"shop5.jpg",
+link:"https://www.google.com/maps?q=17.44298, 102.87541"
+},
+
+shop7:{
+name:"ก๋วยเตี๋ยวหมู ปลาเป้า",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"จำหน่ายก๋วยเตี๋ยวหมูน้ำตก ก๋วยเตี๋ยวน้ำใส และเมนูเส้นต่าง ๆ เหมาะสำหรับมื้อเช้าและมื้อกลางวัน",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"085-450-5656",
+time:"08:00 - 18:00 น.",
+image:"shop6.jpg",
+link:"https://www.google.com/maps?q=17.44258, 102.8767"
+},
+
+shop8:{
+name:"ขนมจีบ ซาลาเปาแม่คำ",
+type:"🟣 ร้านผู้สูงอายุ",
+detail:"จำหน่ายขนมจีบ ซาลาเปา และของว่างพร้อมรับประทาน เหมาะสำหรับซื้อเป็นอาหารรองท้อง",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"084-400-8928",
+time:"16:00 - 21:00 น.",
+image:"shop8.jpg",
+link:"https://www.google.com/maps?q=17.44453, 102.87298"
+},
+
+shop9:{
+name:"นิยมอาหารตามสั่ง",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"ให้บริการอาหารตามสั่งหลากหลายเมนู ปรุงสดใหม่ตามความต้องการของลูกค้า",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"095-670-4184",
+time:"09:00 - 21:00 น.",
+image:"shop7.jpg",
+link:"https://www.google.com/maps?q=17.44232, 102.87656"
+},
+
+shop10:{
+name:"แม่บนแหนมหมู",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"จำหน่ายแหนมหมูและผลิตภัณฑ์อาหารพื้นบ้านที่ทำสดใหม่ เหมาะสำหรับซื้อกลับไปรับประทานหรือเป็นของฝาก",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"086-234-3429",
+time:"17:00 - 21:00 น.",
+image:"shop9.jpg",
+link:"https://www.google.com/maps?q=17.44454, 102.87311"
+},
+
+shop11:{
+name:"ข้าวแกงยายอ้วน",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"จำหน่ายข้าวแกงและอาหารปรุงสำเร็จหลากหลายเมนู รสชาติแบบอาหารบ้าน ๆ",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"099-375-5989",
+time:"17:00 - 22:00 น.",
+image:"shop10.jpg",
+link:"https://www.google.com/maps?q=17.44462, 102.87377"
+},
+
+shop12:{
+name:"ร้านน้องดอมอาหารตามสั่ง",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"ให้บริการอาหารตามสั่งและเมนูเส้นหลากหลาย ปรุงสดใหม่ตามออเดอร์ มีบริการส่งในชุมชนสามพร้าว",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"085-4561258",
+time:"09:00 - 21:00 น.",
+image:"shop11.jpg",
+link:"https://www.google.com/maps?q=17.444, 102.87733"
+},
+
+shop13:{
+name:"ส้มตำเจ้ไมล์ ชานายเขียว สาขา2",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"จำหน่ายส้มตำ ยำ และอาหารอีสานหลากหลายเมนู เหมาะสำหรับรับประทานเป็นมื้อหลัก",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"095-654-2561",
+time:"11:00 - 23:00 น.",
+image:"shop19.jpg",
+link:"https://www.google.com/maps?q=17.44538, 102.88049"
+},
+
+shop14:{
+name:"ตำข้างบ้าน",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"ให้บริการส้มตำและอาหารอีสานรสจัดจ้าน พร้อมเมนูยำและอาหารทานเล่น",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"085-774-1606",
+time:"12:00 - 21:00 น.",
+image:"shop12.jpg",
+link:"https://www.google.com/maps?q=17.44552, 102.87974"
+},
+
+shop15:{
+name:"กุ้งแช่น้ำปลา",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"จำหน่ายกุ้งแช่น้ำปลาและเมนูอาหารทะเลรสแซ่บ เหมาะสำหรับรับประทานช่วงเย็น",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"080-180-5552",
+time:"17:00 - 23:00 น.",
+image:"shop14.jpg",
+link:"https://www.google.com/maps?q=17.44514, 102.87928"
+},
+
+shop16:{
+name:"อาหารตามสั่งครัวแม่สมาน",
+type:"🟣 ร้านผู้สูงอายุ",
+detail:"ให้บริการอาหารตามสั่งหลากหลายเมนู สามารถสั่งล่วงหน้าผ่านไลน์เพื่อความสะดวก",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"063-168-6089 / 061-254-1539 (สั่งข้าวแอด Line)",
+time:"07:00 - 23:00 น.",
+image:"shop15.jpg",
+link:"https://www.google.com/maps?q=17.44488, 102.87726"
+},
+
+shop17:{
+name:"เมนูล้านชา",
+type:"🟠 ร้านของหวานและเครื่องดื่ม",
+detail: "จำหน่ายชา กาแฟ และเครื่องดื่มหลากหลายเมนู เหมาะสำหรับผู้ที่ต้องการเครื่องดื่มสดชื่นระหว่างวัน",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"062-756-2356",
+time:"11:00 - 22:30 น.",
+image:"shop20.jpg",
+link:"https://www.google.com/maps?q=17.44516, 102.88067"
+},
+
+shop18:{
+name:"ไก่ยาง 5 ดาว",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"จำหน่ายไก่ย่างและเมนูไก่พร้อมรับประทาน สะดวกสำหรับซื้อกลับบ้าน",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"094-762-4688",
+time:"09:30 - 20:00 น.",
+image:"shop16.jpg",
+link:"https://www.google.com/maps?q=17.44515, 102.88048"
+},
+
+shop19:{
+name:"เปิดบ่หล่ะ เจ้นิ",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"จำหน่ายก๋วยเตี๋ยวหลากหลายเมนู รสชาติแบบท้องถิ่น มีทั้งรับประทานที่ร้านและซื้อกลับบ้าน",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"091-227-4414",
+time:"11:30 - 17:30 น.",
+image:"shop17.jpg",
+link:"https://www.google.com/maps?q=17.44668, 102.87993"
+},
+
+shop20:{
+name:"ส้มตำยายน้อย",
+type:"🔵 ร้านค้าทั่วไป",
+detail:"จำหน่ายส้มตำ อาหารอีสาน และเมนูอาหารตามสั่ง เหมาะสำหรับรับประทานในครอบครัวและกลุ่มเพื่อน",
+location:"บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมืองอุดรธานี จังหวัดอุดรธานี",
+phone:"061-298-7640",
+time:"05:30 - 17:00 น.",
+image:"shop18.jpg",
+link:"https://www.google.com/maps?q=17.44258, 102.88014"
+}
+
+
+};
+
+function showShop(event,id){
+
+const popup = document.getElementById("popup");
+
+popup.style.display = "block";
+
+const marker = event.target.closest(".marker");
+
+const markerX = marker.offsetLeft;
+const markerY = marker.offsetTop;
+
+const mapWidth =
+document.querySelector(".map-container").offsetWidth;
+
+/* ตำแหน่ง Popup */
+if(window.innerWidth <= 600){
+
+    // มือถือ: CSS จัด Popup ไว้ด้านล่างหน้าจอ
+    popup.style.left = "";
+    popup.style.top = "";
+
+}else{
+
+    // Tablet / คอม: วาง Popup ใกล้หมุด
+    if(markerX > mapWidth / 2){
+        popup.style.left = (markerX - 320) + "px";
+    }else{
+        popup.style.left = (markerX + 40) + "px";
+    }
+
+    let popupTop = markerY - 320;
+
+    if(popupTop < 20){
+        popupTop = markerY + 30;
+    }
+
+    popup.style.top = popupTop + "px";
+}
+
+/* ข้อมูลร้าน */
+document.getElementById("popupName").innerText =
+shops[id].name;
+
+document.getElementById("popupType").innerText =
+shops[id].type;
+
+document.getElementById("popupDetail").innerText =
+shops[id].detail;
+
+document.getElementById("popupTime").innerText =
+"🕒 " + shops[id].time;
+
+document.getElementById("popupPhone").innerText =
+"📞 " + shops[id].phone;
+
+document.getElementById("popupLocation").innerText =
+"📍 " + shops[id].location;
+
+document.getElementById("popupImage").src =
+"./" + shops[id].image;
+
+document.getElementById("popupLink").href =
+shops[id].link;
+
+}
+
+function closePopup(){
+document.getElementById("popup")
+.style.display="none";
+}
+document.addEventListener("click", function(event){
+
+    const popup = document.getElementById("popup");
+
+    // ถ้าคลิกหมุดหรือคลิกในกล่องข้อมูล ไม่ต้องปิด
+    if (
+        event.target.closest(".marker") ||
+        event.target.closest(".popup")
+    ) {
+        return;
+    }
+
+    // คลิกพื้นที่อื่น ปิดกล่องข้อมูล
+    popup.style.display = "none";
+
+});
+
+
+</script>
+
+</body>
+</html>
